@@ -1,0 +1,86 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job">
+  <description>Pipeline para rodar scanners no VAmPI e enviar ao DefectDojo</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps">
+    <script>
+pipeline {
+    agent any
+    environment {
+        DEFECTDOJO_URL = "http://localhost:8080" // URL do DefectDojo
+        DEFECTDOJO_TOKEN = "28ff908b602cd7716ead574ce5a0872d4a2390e1" // Token do DefectDojo
+        ENGAGEMENT_ID = "1" // ID do engajamento
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/erev0s/VAmPI.git'
+            }
+        }
+        stage('SAST Scan - Semgrep/Bandit') {
+            steps {
+                script {
+                    sh 'docker exec tools semgrep --config=auto ./ -o semgrep.json --json'
+                    sh """
+                    curl -X POST -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
+                    -F "scan_type=Semgrep Scan" \
+                    -F "engagement=${ENGAGEMENT_ID}" \
+                    -F "file=@semgrep.json" \
+                    -F "verified=false" \
+                    -F "active=true" \
+                    ${DEFECTDOJO_URL}/api/v2/import-scan/
+                    """
+                    sh 'docker exec tools bandit -r ./ -o bandit.json -f json'
+                    sh """
+                    curl -X POST -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
+                    -F "scan_type=Bandit Scan" \
+                    -F "engagement=${ENGAGEMENT_ID}" \
+                    -F "file=@bandit.json" \
+                    -F "verified=false" \
+                    -F "active=true" \
+                    ${DEFECTDOJO_URL}/api/v2/import-scan/
+                    """
+                }
+            }
+        }
+        stage('SCA Scan - Trivy') {
+            steps {
+                script {
+                    sh 'docker exec tools trivy fs ./ --format json --output trivy.json'
+                    sh """
+                    curl -X POST -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
+                    -F "scan_type=Trivy Scan" \
+                    -F "engagement=${ENGAGEMENT_ID}" \
+                    -F "file=@trivy.json" \
+                    -F "verified=false" \
+                    -F "active=true" \
+                    ${DEFECTDOJO_URL}/api/v2/import-scan/
+                    """
+                }
+            }
+        }
+        stage('Secrets Scan - Gitleaks') {
+            steps {
+                script {
+                    sh 'docker exec tools gitleaks detect --source=./ --report-format=json --report-path=gitleaks.json'
+                    sh """
+                    curl -X POST -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
+                    -F "scan_type=Gitleaks Scan" \
+                    -F "engagement=${ENGAGEMENT_ID}" \
+                    -F "file=@gitleaks.json" \
+                    -F "verified=false" \
+                    -F "active=true" \
+                    ${DEFECTDOJO_URL}/api/v2/import-scan/
+                    """
+                }
+            }
+        }
+    }
+}
+    </script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

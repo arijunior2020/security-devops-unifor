@@ -1,0 +1,31 @@
+FROM ubuntu:latest
+
+# Atualizar o sistema e instalar dependências básicas
+RUN apt update && apt install -y \
+    python3 python3-pip python3-venv wget curl git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Criar um ambiente virtual e instalar Semgrep e outras ferramentas
+RUN python3 -m venv /opt/venv \
+    && /opt/venv/bin/pip install --upgrade pip \
+    && /opt/venv/bin/pip install semgrep bandit
+
+# Baixar e instalar a versão mais recente do Trivy
+RUN wget -O trivy.deb $(wget -qO- https://api.github.com/repos/aquasecurity/trivy/releases/latest | grep browser_download_url | grep Linux-64bit.deb | cut -d '"' -f 4) \
+    && dpkg -i trivy.deb \
+    && rm trivy.deb
+
+# Instalar o Gitleaks compatível com a arquitetura
+RUN wget https://github.com/zricethezav/gitleaks/releases/download/v8.17.0/gitleaks_8.17.0_linux_x64.tar.gz \
+    && tar -xzf gitleaks_8.17.0_linux_x64.tar.gz \
+    && mv gitleaks /usr/local/bin/gitleaks \
+    && chmod +x /usr/local/bin/gitleaks
+
+# Atualizar o PATH para incluir o ambiente virtual
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Diretório de trabalho
+WORKDIR /tools
+
+# Comando padrão para manter o contêiner ativo
+CMD ["tail", "-f", "/dev/null"]

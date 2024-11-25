@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
+    container_name: jenkins
+    user: root
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - workspace_data:/var/jenkins_home/workspace # Volume compartilhado para o workspace
+    restart: always
+    networks:
+      - security-network
+    depends_on:
+      - tools
+
+  tools:
+    build:
+      context: .
+      dockerfile: Dockerfile.tools
+    container_name: tools
+    volumes:
+      - tools_data:/tools
+      - workspace_data:/var/jenkins_home/workspace # Monta o mesmo volume do workspace
+    networks:
+      - security-network
+
+volumes:
+  jenkins_home:
+    driver: local
+  tools_data:
+    driver: local
+  workspace_data: # Volume para compartilhar o workspace
+    driver: local
+
+networks:
+  security-network:
+    driver: bridge
