@@ -1,14 +1,24 @@
-# Projeto SecDevOps - UNIFOR
+# Projeto DevSecOps - UNIFOR
 
 ## Descrição
-Este projeto foi desenvolvido como trabalho final da disciplina **DevSecOps** na Universidade de Fortaleza (**UNIFOR**) sob a orientação do professor **Cristiano**. O objetivo é criar um pipeline no Jenkins utilizando ferramentas de análise SAST e SCA (Semgrep, Bandit, Trivy e Gitleaks) para identificar vulnerabilidades em um código e enviar os resultados para o **DefectDojo**, que atua como ferramenta de gerenciamento dessas vulnerabilidades.
+Este projeto foi desenvolvido como trabalho final da disciplina **DevSecOps** na Universidade de Fortaleza (**UNIFOR**) sob a orientação do professor **Cristiano Santos**. O objetivo é criar um pipeline no Jenkins utilizando ferramentas de análise SAST e SCA (Semgrep, Bandit, Trivy e Gitleaks) para identificar vulnerabilidades em um código e enviar os resultados para o **DefectDojo**, que atua como ferramenta de gerenciamento dessas vulnerabilidades.
 
 ---
 
 ## Estrutura do Projeto
 A estrutura do projeto é a seguinte:
 
-PROJETO-DEVSECOPS │ ├── django-DefectDojo/ # Repositório clonado do DefectDojo ├── VAmPI/ # Repositório clonado para testes (opcional) ├── config.xml # Configuração do pipeline no Jenkins ├── docker-compose.yml # Orquestração dos contêineres ├── Dockerfile.jenkins # Configuração do contêiner Jenkins ├── Dockerfile.tools # Configuração do contêiner com as ferramentas └── Jenkinsfile # Pipeline do Jenkins
+
+```bash
+PROJETO-DEVSECOPS/
+├── django-DefectDojo/       # Repositório clonado do DefectDojo
+├── VAmPI/                   # Repositório clonado para testes (opcional)
+├── config.xml               # Configuração do pipeline no Jenkins
+├── docker-compose.yml       # Orquestração dos contêineres
+├── Dockerfile.jenkins       # Configuração do contêiner Jenkins
+├── Dockerfile.tools         # Configuração do contêiner com as ferramentas
+└── Jenkinsfile              # Pipeline do Jenkins
+```
 
 
 ### Detalhes:
@@ -49,7 +59,7 @@ cd django-DefectDojo
 docker compose logs initializer | grep "Admin password:"
 ```
 
-Após a configuração, o DefectDojo estará disponível em http://localhost:8080
+Após a configuração, [o DefectDojo estará disponível em](http://localhost:8080)
 
 ### 2. Criando Docker-compose.yml e definido os serviços
 
@@ -367,51 +377,58 @@ pipeline {
     }
 }
 ```
-Segue detlhamento das etapas:
-
-# 1. Configurar Diretório como Seguro no Git:
-Configura o diretório como seguro para operações Git.
-
-# 2. Clone ou Atualizar Repositório:
-Clona ou atualiza o repositório alvo para análise.
-
-# 3. Análise SAST - Semgrep:
-Executa o Semgrep e envia os resultados ao DefectDojo.
-
-# 4. Análise SAST - Bandit:
-Executa o Bandit e envia os resultados ao DefectDojo.
-
-# 5. Análise SCA - Trivy:
-Executa o Trivy e envia os resultados ao DefectDojo.
-
-# 6. Análise de Segredos - Gitleaks:
-Executa o Gitleaks e envia os resultados ao DefectDojo.
 
 ### 6. Ferramentas Utilizadas
 
-# 1. Semgrep
+#### 🛡️ Semgrep
 O Semgrep é uma ferramenta de análise SAST que verifica códigos em busca de padrões que possam representar vulnerabilidades. Ele utiliza regras customizáveis e suporta diversas linguagens.
-Execução no Pipeline: O Semgrep analisa os arquivos do repositório clonado e gera um relatório que é enviado ao DefectDojo.
-[Site oficial:](https://semgrep.dev/) 
 
-# 2. Bandit
+- **Execução no Pipeline**: O Semgrep analisa os arquivos do repositório clonado e gera um relatório que é enviado ao DefectDojo.
+
+[🌐 Site oficial do Semgrep](https://semgrep.dev/)
+
+---
+
+#### 🐍 Bandit
 O Bandit é uma ferramenta de análise estática voltada para código Python, que verifica por vulnerabilidades comuns.
-Execução no Pipeline: O Bandit escaneia o repositório em busca de possíveis problemas de segurança no código e envia o relatório para o DefectDojo.
-[Site oficial:](https://github.com/PyCQA/bandit)
 
-# 3. Trivy
+- **Execução no Pipeline**: O Bandit escaneia o repositório em busca de possíveis problemas de segurança no código e envia o relatório para o DefectDojo.
+
+[🌐 Site oficial do Bandit](https://github.com/PyCQA/bandit)
+
+---
+
+#### 🛠️ Trivy
 O Trivy é uma ferramenta de análise SCA que verifica vulnerabilidades em dependências e contêineres.
-Execução no Pipeline: O Trivy analisa as dependências do projeto e gera um relatório sobre possíveis vulnerabilidades.
-[Site oficial:](https://github.com/aquasecurity/trivy)
 
-# 4. Gitleaks
+- **Execução no Pipeline**: O Trivy analisa as dependências do projeto e gera um relatório sobre possíveis vulnerabilidades.
+
+[🌐 Site oficial do Trivy](https://github.com/aquasecurity/trivy)
+
+---
+
+#### 🔑 Gitleaks
 O Gitleaks é uma ferramenta de análise para detectar segredos vazados, como chaves de API e senhas, em repositórios Git.
-Execução no Pipeline: O Gitleaks escaneia o histórico do repositório e gera um relatório que é enviado ao DefectDojo.
-[Site oficial:](https://github.com/gitleaks/gitleaks)
 
-# 5. DefectDojo
+- **Execução no Pipeline**: O Gitleaks escaneia o histórico do repositório e gera um relatório que é enviado ao DefectDojo.
+
+[🌐 Site oficial do Gitleaks](https://github.com/gitleaks/gitleaks)
+
+---
+
+#### 📊 DefectDojo
 O DefectDojo é uma ferramenta de gerenciamento de vulnerabilidades que consolida os resultados dos scans em um único painel, permitindo a análise centralizada das vulnerabilidades encontradas.
-[Site oficial:](https://www.defectdojo.org/)
+
+[🌐 Site oficial do DefectDojo](https://www.defectdojo.org/)
+
+| Ferramenta      | Função                                                                                     | Link                                                                 |
+|------------------|--------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+| 🛡️ **Semgrep**  | Ferramenta de análise SAST que verifica códigos em busca de vulnerabilidades.              | [Site Oficial](https://semgrep.dev/)                                |
+| 🐍 **Bandit**    | Análise estática voltada para código Python, verificando vulnerabilidades comuns.          | [Site Oficial](https://github.com/PyCQA/bandit)                     |
+| 🛠️ **Trivy**    | Ferramenta de análise SCA que verifica vulnerabilidades em dependências e contêineres.     | [Site Oficial](https://github.com/aquasecurity/trivy)               |
+| 🔑 **Gitleaks**  | Detecta segredos vazados (chaves de API, senhas) em repositórios Git.                      | [Site Oficial](https://github.com/gitleaks/gitleaks)                |
+| 📊 **DefectDojo**| Consolida resultados de scans em um painel de gerenciamento de vulnerabilidades.           | [Site Oficial](https://www.defectdojo.org/)                         |
+
 
 ### 7. Conclusão
 
