@@ -66,7 +66,7 @@ cd django-DefectDojo
 docker compose logs initializer | grep "Admin password:"
 ```
 
-Após a configuração, [o DefectDojo estará disponível em](http://localhost:8080)
+Após a configuração, o DefectDojo estará disponível em: (http://localhost:8080)
 
 ### 2. Criando Docker-compose.yml e definido os serviços
 
