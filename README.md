@@ -206,6 +206,15 @@ Este comando criará dois contêineres:
 
 ![Containers](Containers.png)
 
+## Expondo o DefectDojo com Ngrok
+
+Devido à separação de redes entre os contêineres do DefectDojo e do Tools, foi necessário utilizar o ngrok para expor o DefectDojo e permitir que as ferramentas (Semgrep, Bandit, Trivy e Gitleaks) enviem os relatórios para a API do DefectDojo.
+
+![Ngrok em Execução](ngrok.png)
+
+*Figura 1: Ngrok expondo o DefectDojo e mostrando as requisições enviadas pelas ferramentas.*
+
+
 ## 5. Pipeline
 
 Pipeline do Jenkins
@@ -393,19 +402,19 @@ pipeline {
 ![Execução do Pipeline](Execução%20Pipeline%2002.png)
 ![Execução do Pipeline](Execução%20Pipeline%2003.png)
 
-*Figura 1: Execução do pipeline no Jenkins, incluindo os resultados das ferramentas de análise.*
+*Figura 2: Execução do pipeline no Jenkins, incluindo os resultados das ferramentas de análise.*
 
 ![Scans gerados no container Tools](Relatórios%20gerados.png)
 
-*Figura 2: Scans gerados dentro do container tools.*
+*Figura 3: Scans gerados dentro do container tools.*
 
 ![Dashboard DefectDoJo](Tela%20defectdojo%20scans%20recebidos.png)
 
-*Figura 3: Tela principal DefectDoJo.*
+*Figura 4: Tela principal DefectDoJo.*
 
 ![Vulnerabilidades DefectDoJo](Vulnerabilidades%20Defectdojo.png)
 
-*Figura 4: Vulnerabilidades exibidas pelo DefectDoJo.*
+*Figura 5: Vulnerabilidades exibidas pelo DefectDoJo.*
 
 ## 6. Ferramentas Utilizadas
 
