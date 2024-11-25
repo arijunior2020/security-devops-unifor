@@ -202,6 +202,10 @@ Este comando criará dois contêineres:
 ## 1.Jenkins: Serviço principal para execução do pipeline.
 ## 2.Tools: Contêiner com as ferramentas (Semgrep, Bandit, Trivy e Gitleaks).
 
+# Containers
+
+![Containers](Containers.png)
+
 ### 5. Pipeline
 
 Pipeline do Jenkins
@@ -384,6 +388,24 @@ pipeline {
     }
 }
 ```
+
+![Execução do Pipeline](Execução%20Pipeline%2001.png)
+![Execução do Pipeline](Execução%20Pipeline%2002.png)
+![Execução do Pipeline](Execução%20Pipeline%2003.png)
+
+*Figura 1: Execução do pipeline no Jenkins, incluindo os resultados das ferramentas de análise.*
+
+![Scans gerados no container Tools](Relatórios%20gerados.png)
+
+*Figura 2: Scans gerados dentro do container tools.*
+
+![Dashboard DefectDoJo](Tela%20defectdojo%20scans%20recebidos.png)
+
+*Figura 3: Tela principal DefectDoJo.*
+
+![Vulnerabilidades DefectDoJo](Vulnerabilidades%20Defectdojo.png)
+
+*Figura 4: Vulnerabilidades exibidas pelo DefectDoJo.*
 
 ### 6. Ferramentas Utilizadas
 
