@@ -3,9 +3,9 @@
 
 ## Equipe:
 
-- Arimatéia Júnior
-- Karime Linhares
-- Victor Elpídio
+- Arimatéia Júnior - Matrícula: 2417061
+- Karime Linhares - Matrícula:
+- Victor Elpídio - Matricula: 
 
 ## Descrição
 Este projeto foi desenvolvido como trabalho final da disciplina **DevSecOps** na Universidade de Fortaleza (**UNIFOR**) sob a orientação do professor **Cristiano Santos**. O objetivo é criar um pipeline no Jenkins utilizando ferramentas de análise SAST e SCA (Semgrep, Bandit, Trivy e Gitleaks) para identificar vulnerabilidades em um código e enviar os resultados para o **DefectDojo**, que atua como ferramenta de gerenciamento dessas vulnerabilidades.
@@ -210,7 +210,7 @@ Este comando criará dois contêineres:
 
 Devido à separação de redes entre os contêineres do DefectDojo e do Tools, foi necessário utilizar o ngrok para expor o DefectDojo e permitir que as ferramentas (Semgrep, Bandit, Trivy e Gitleaks) enviem os relatórios para a API do DefectDojo.
 
-![Ngrok em Execução](ngrok.png)
+![Ngrok em Execução](/img/ngrok.png)
 
 *Figura 1: Ngrok expondo o DefectDojo e mostrando as requisições enviadas pelas ferramentas.*
 
@@ -398,21 +398,21 @@ pipeline {
 }
 ```
 
-![Execução do Pipeline](Execução%20Pipeline%2001.png)
-![Execução do Pipeline](Execução%20Pipeline%2002.png)
-![Execução do Pipeline](Execução%20Pipeline%2003.png)
+![Execução do Pipeline](/img/Execução%20Pipeline%2001.png)
+![Execução do Pipeline](/img/Execução%20Pipeline%2002.png)
+![Execução do Pipeline](/img/Execução%20Pipeline%2003.png)
 
 *Figura 2: Execução do pipeline no Jenkins, incluindo os resultados das ferramentas de análise.*
 
-![Scans gerados no container Tools](Relatórios%20gerados.png)
+![Scans gerados no container Tools](/img/Relatórios%20gerados.png)
 
 *Figura 3: Scans gerados dentro do container tools.*
 
-![Dashboard DefectDoJo](Tela%20defectdojo%20scans%20recebidos.png)
+![Dashboard DefectDoJo](/img/Tela%20defectdojo%20scans%20recebidos.png)
 
 *Figura 4: Tela principal DefectDoJo.*
 
-![Vulnerabilidades DefectDoJo](Vulnerabilidades%20Defectdojo.png)
+![Vulnerabilidades DefectDoJo](/img/Vulnerabilidades%20Defectdojo.png)
 
 *Figura 5: Vulnerabilidades exibidas pelo DefectDoJo.*
 
