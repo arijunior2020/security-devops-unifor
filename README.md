@@ -199,8 +199,8 @@ docker-compose build && docker compose up -d
 ```
 Este comando criará dois contêineres:
 
-# 1.Jenkins: Serviço principal para execução do pipeline.
-# 2.Tools: Contêiner com as ferramentas (Semgrep, Bandit, Trivy e Gitleaks).
+## 1.Jenkins: Serviço principal para execução do pipeline.
+## 2.Tools: Contêiner com as ferramentas (Semgrep, Bandit, Trivy e Gitleaks).
 
 ### 5. Pipeline
 
