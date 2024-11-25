@@ -117,9 +117,9 @@ networks:
     driver: bridge
 ```
 
-### 3. Criando os Dockerfile do Jenkins e do Tools
+## 3. Criando os Dockerfile do Jenkins e do Tools
 
-# Dockerfile.tools
+### Dockerfile.tools
 Este arquivo configura um ambiente contendo as ferramentas Semgrep, Bandit, Trivy e Gitleaks.
 
 ```bash
@@ -156,7 +156,7 @@ WORKDIR /tools
 CMD ["tail", "-f", "/dev/null"]
 ```
 
-# Dockerfile.jenkins
+### Dockerfile.jenkins
 Este arquivo configura o ambiente com docker e docker compose para rodar os serviços das ferramentas Semgrep, Bandit, Trivy e Gitleaks em containers.
 
 ```bash
@@ -190,23 +190,23 @@ RUN usermod -aG docker jenkins || true
 USER jenkins
 ```
 
-### 4. Configurando os Serviços (Jenkins e Ferramentas tools)
+## 4. Configurando os Serviços (Jenkins e Ferramentas tools)
 No diretório do projeto, crie os serviços definidos no docker-compose.yml:
 
-# Construa e Suba os serviços
+### Construa e Suba os serviços
 ```bash
 docker-compose build && docker compose up -d
 ```
 Este comando criará dois contêineres:
 
-## 1.Jenkins: Serviço principal para execução do pipeline.
-## 2.Tools: Contêiner com as ferramentas (Semgrep, Bandit, Trivy e Gitleaks).
+### 1.Jenkins: Serviço principal para execução do pipeline.
+### 2.Tools: Contêiner com as ferramentas (Semgrep, Bandit, Trivy e Gitleaks).
 
 # Containers
 
 ![Containers](Containers.png)
 
-### 5. Pipeline
+## 5. Pipeline
 
 Pipeline do Jenkins
 O pipeline, configurado no arquivo Jenkinsfile, executa as etapas descritas abaixo:
@@ -407,7 +407,7 @@ pipeline {
 
 *Figura 4: Vulnerabilidades exibidas pelo DefectDoJo.*
 
-### 6. Ferramentas Utilizadas
+## 6. Ferramentas Utilizadas
 
 #### 🛡️ Semgrep
 O Semgrep é uma ferramenta de análise SAST que verifica códigos em busca de padrões que possam representar vulnerabilidades. Ele utiliza regras customizáveis e suporta diversas linguagens.
@@ -459,6 +459,6 @@ O DefectDojo é uma ferramenta de gerenciamento de vulnerabilidades que consolid
 | 📊 **DefectDojo**| Consolida resultados de scans em um painel de gerenciamento de vulnerabilidades.           | [Site Oficial](https://www.defectdojo.org/)                         |
 
 
-### 7. Conclusão
+## 7. Conclusão
 
 Este projeto demonstra como integrar ferramentas modernas de segurança em um pipeline DevSecOps. Ao utilizar ferramentas como Semgrep, Bandit, Trivy e Gitleaks junto ao DefectDojo, conseguimos identificar, gerenciar e mitigar vulnerabilidades de forma centralizada e eficiente.
