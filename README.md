@@ -1,4 +1,11 @@
 # Projeto DevSecOps - UNIFOR
+**Disciplina**: Engenharia de Software com enfâse em DevOps
+
+## Equipe:
+
+- Arimatéia Júnior
+- Karime Linhares
+- Victor Elpídio
 
 ## Descrição
 Este projeto foi desenvolvido como trabalho final da disciplina **DevSecOps** na Universidade de Fortaleza (**UNIFOR**) sob a orientação do professor **Cristiano Santos**. O objetivo é criar um pipeline no Jenkins utilizando ferramentas de análise SAST e SCA (Semgrep, Bandit, Trivy e Gitleaks) para identificar vulnerabilidades em um código e enviar os resultados para o **DefectDojo**, que atua como ferramenta de gerenciamento dessas vulnerabilidades.
